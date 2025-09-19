@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel转换工具</title>
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+</head>
+
+<body>
+    <div id="box">
+        <header>Excel转换工具 V1.0.0</header>
+        <div id="inner_box">
+            <div id="content">
+                <div id="select_file">
+                    <input type="file" id="fileInput" accept=".log">
+                </div>
+                <div id="export_excel">
+                    <button disabled="true" id="exportBtn" onclick="exportExcel()">导出Excel</button>
+                </div>
+            </div>
+            <div id="progress_box">
+                <div id="progress"></div>
+                <div class="loader-container" id="loader">
+                    <div class="loader"></div>
+                </div>
+                <div id="tips">
+                    <span id="txt"></span>
+                    <span id="num"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="./commonJS/xlsx.full.min.js"></script>
+    <script src="./commonJS/index.js"></script>
+</body>
+
+</html>
