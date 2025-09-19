@@ -1,186 +1,192 @@
 html {
-        position: relative;
-        width: 100%;
-        height: 100%;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform: scale(calc(100vw / 1920));
+}
+
+@media (min-width: 375px) and (max-width: 768px) {
+  html {scale: .5}
+}
+
+/* 小屏平板 */
+@media (min-width: 760px) and (max-width: 1024px) {
+  html {scale: .9}
+}
+
+#box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 800px;
+    height: 450px;
+    /* border: 1px solid #ccc; */
+    border-radius: 20px;
+    background-color: #f7f6f6;
+    box-shadow: #000 0px 0px 10px;
+    transform: translate(-50%, -50%);
+}
+
+header {
+    border-bottom: 1px solid #121212;
+    background-color: #dedede;
+    border-radius: 20px 20px 0px 0px;
+    height: 30px;
+    line-height: 30px;
+    font-weight: 800;
+    padding-left: 10px;
+}
+
+#inner_box {
+    width: 800px;
+    height: calc(100% - 30px);
+}
+
+#progress_box {
+    display: none;
+    width: 80%;
+    height: 30px;
+    border: 1px solid #fff;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: #0000004e 0px 0px 5px;
+    margin: 0 auto;
+}
+
+#progress {
+    /* position: absolute; */
+    width: 0%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: #43badf;
+    transition: width 0.5s;
+}
+
+#tips {
+    margin-top: 15px;
+}
+
+#select_file {
+    margin-bottom: 40px;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+button {
+    width: 300px;
+    height: 50px;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    box-shadow: #00000085 0px 0px 5px;
+    background: #f8f9fa;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #fff;
+}
+
+button:disabled:hover {
+    cursor: not-allowed;
+    background-color: #f8f9fa;
+}
+
+.loader-container {
+    display: none;
+    position: absolute;
+    right: 35px;
+    top: 315px;
+}
+
+/* 加载动画主体 */
+.loader {
+    width: 20px;
+    height: 20px;
+    border: 4px solid #fff;
+    border-top: 4px solid #43badf;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* 旋转动画 */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
     }
 
-    #box {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 40%;
-        height: 450px;
-        /* border: 1px solid #ccc; */
-        border-radius: 20px;
-        background-color: #f7f6f6;
-        box-shadow: #000 0px 0px 10px;
-        transform: translate(-50%, -50%);
+    100% {
+        transform: rotate(360deg);
     }
+}
 
-    header {
-        border-bottom: 1px solid #121212;
-        background-color: #dedede;
-        border-radius: 20px 20px 0px 0px;
-        height: 30px;
-        line-height: 30px;
-        font-weight: 800;
-        padding-left: 10px;
-    }
+/* 激活状态 */
+.loader-container.active {
+    display: flex;
+}
 
-    #inner_box {
-        width: 100%;
-        height: calc(100% - 90px);
-        margin-top: 60px;
-    }
+#fileInput {
+    /* 设置显示尺寸 */
+    width: 300px;
+    height: 50px;
 
-    #export_excel {
-        width: 44%;
-    }
+    /* 调整内边距 */
+    padding-top: 22px;
 
-    #progress_box {
-        display: none;
-        width: 80%;
-        height: 30px;
-        border: 1px solid #fff;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: #0000004e 0px 0px 5px;
-        margin: 0 auto;
-    }
+    /* 调整字体大小 */
+    font-size: 16px;
 
-    #progress {
-        /* position: absolute; */
-        width: 0%;
-        height: 100%;
-        border-radius: 10px;
-        background-color: #43badf;
-        transition: width 0.5s;
-    }
+    /* 覆盖浏览器默认样式 */
+    display: inline-block;
+    /* border: 2px solid #ccc; */
+    border-radius: 8px;
+    background: #f8f9fa;
+    box-shadow: #00000085 0px 0px 5px;
+    cursor: pointer;
+}
 
-    #tips {
-        margin-top: 15px;
-    }
+/* 针对不同浏览器的兼容处理 */
+@supports (-moz-appearance:none) {
 
-    #select_file {
-        margin-bottom: 40px;
-        width: 44%;
-    }
-
-    #content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 60px;
-    }
-
-    button {
-        width: 100%;
-        height: 50px;
-        border: 1px solid #fff;
-        border-radius: 8px;
-        box-shadow: #00000085 0px 0px 5px;
-        background: #f8f9fa;
-    }
-
-    button:hover {
-        cursor: pointer;
-        background-color: #fff;
-    }
-
-    button:disabled:hover {
-        cursor: not-allowed;
-        background-color: #f8f9fa;
-    }
-
-    .loader-container {
-        display: none;
-        position: absolute;
-        right: 35px;
-        top: 315px;
-    }
-
-    /* 加载动画主体 */
-    .loader {
-        width: 20px;
-        height: 20px;
-        border: 4px solid #fff;
-        border-top: 4px solid #43badf;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
-
-    /* 旋转动画 */
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-    /* 激活状态 */
-    .loader-container.active {
-        display: flex;
-    }
-
+    /* Firefox专用调整 */
     #fileInput {
-        /* 设置显示尺寸 */
-        width: 100%;
-        height: 50px;
-
-        /* 调整内边距 */
-        padding-top: 22px;
-
-        /* 调整字体大小 */
-        font-size: 16px;
-
-        /* 覆盖浏览器默认样式 */
-        display: inline-block;
-        /* border: 2px solid #ccc; */
-        border-radius: 8px;
-        background: #f8f9fa;
-        box-shadow: #00000085 0px 0px 5px;
-        cursor: pointer;
+        padding: 8px 0;
     }
+}
 
-    /* 针对不同浏览器的兼容处理 */
-    @supports (-moz-appearance:none) {
+/* 悬停/聚焦状态 */
+#fileInput:hover,
+#fileInput:focus {
+    /* border-color: #007bff; */
+    background: #fff;
+    outline: none;
+}
 
-        /* Firefox专用调整 */
-        #fileInput {
-            padding: 8px 0;
-        }
-    }
+#fileInput:disabled:hover {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+}
 
-    /* 悬停/聚焦状态 */
-    #fileInput:hover,
-    #fileInput:focus {
-        /* border-color: #007bff; */
-        background: #fff;
-        outline: none;
-    }
+/* 隐藏原生文字（可选） */
+#fileInput::file-selector-button {
+    display: none;
+}
 
-    #fileInput:disabled:hover {
-        background-color: #f8f9fa;
-        cursor: not-allowed;
-    }
+/* 自定义按钮样式（可选） */
+#fileInput::before {
+    content: "📁 选择日志文件";
+    color: #007bff;
+    padding: 8px 16px;
+    /* background: #e9ecef; */
+    border-radius: 4px;
+    margin-right: 12px;
+}
 
-    /* 隐藏原生文字（可选） */
-    #fileInput::file-selector-button {
-        display: none;
-    }
-
-    /* 自定义按钮样式（可选） */
-    #fileInput::before {
-        content: "📁 选择日志文件";
-        color: #007bff;
-        padding: 8px 16px;
-        /* background: #e9ecef; */
-        border-radius: 4px;
-        margin-right: 12px;
-    }
-    #fileInput:disabled::before{
-        color: #1010104D;
-    }
+#fileInput:disabled::before {
+    color: #1010104D;
+}
