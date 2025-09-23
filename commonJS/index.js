@@ -26,7 +26,7 @@ fileInput.addEventListener('change', function (e) {
     if (!file) return;
 
     // 检查文件扩展名
-    const validExtensions = ['.log'];
+    const validExtensions = ['.json'];
     const fileExt = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
 
     if (validExtensions.includes(fileExt)) {
