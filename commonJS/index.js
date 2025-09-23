@@ -37,7 +37,7 @@ fileInput.addEventListener('change', function (e) {
         console.log('已选择文件:', file.name);
         console.log('文件大小:', (file.size / 1024).toFixed(2) + 'KB');
     } else {
-        alert('请选择有效的 .log 文件');
+        alert('请选择有效的 .json 文件');
         fileInput.value = ''; // 清空选择
     }
     loadingAnimation(0, 0);
