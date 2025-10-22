@@ -9,7 +9,7 @@ const exportBtn = document.getElementById('exportBtn');
 let fileData = "";
 let json_arr = [];
 let excel_data = [];
-
+let inputFileName = "";
 // 显示/隐藏加载动画
 function loadingAnimation(isShow, progressNum) {
     loading.style.display = isShow ? 'block' : 'none';
@@ -28,7 +28,7 @@ fileInput.addEventListener('change', function (e) {
     // 检查文件扩展名
     const validExtensions = ['.json'];
     const fileExt = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
-
+    inputFileName = file.name.split('.')[0];
     if (validExtensions.includes(fileExt)) {
         // 启用所有需要控制的按钮
         exportBtn.disabled = false;
@@ -145,7 +145,7 @@ function downloadFile() {
     XLSX.utils.book_append_sheet(wb, ws, "单体电压与温度数据");
 
     // 5. 导出文件
-    XLSX.writeFile(wb, "单体电压与温度数据表.xlsx", {
+    XLSX.writeFile(wb, `${inputFileName}.xlsx`, {
         cellDates: true,  // 允许日期格式
         bookType: 'xlsx'  // 指定文件类型
     });
