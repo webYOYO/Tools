@@ -95,7 +95,14 @@ async function handleFileData() {
             excel_data[i + 1] = [];
             //处理每条数据
             for (let key in json_arr[i]) {
-                excel_data[i + 1].push(json_arr[i][key]);
+                //原数据中，每一个温度对应4个电芯温度
+                if(key.includes("BMS_T")) {
+                    for(let temp_idx = 1; temp_idx <= 4; temp_idx++) {
+                        excel_data[i + 1].push(json_arr[i][key]);
+                    }
+                }else {
+                    excel_data[i + 1].push(json_arr[i][key]);
+                }
             }
 
         }
@@ -116,7 +123,7 @@ function downloadFile() {
         excel_data[0].push(`Volt${i}`);
     }
     //表头增加48个温度
-    for (let i = 1; i < 49; i++) {
+    for (let i = 1; i < 193; i++) {
         excel_data[0].push(`Temp${i}`);
     }
 
