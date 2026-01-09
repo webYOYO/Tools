@@ -10,8 +10,11 @@ let fileData = "";
 let json_arr = [];
 let excel_data = [];
 let inputFileName = "";
+let BMS_NUM = 0;
+let current_progress = 0;
 // 显示/隐藏加载动画
 function loadingAnimation(isShow, progressNum) {
+    current_progress = progressNum;
     loading.style.display = isShow ? 'block' : 'none';
     if (progressNum !== null) {
         numArea.textContent = progressNum + '%';
@@ -23,7 +26,11 @@ function loadingAnimation(isShow, progressNum) {
 fileInput.addEventListener('change', function (e) {
     // 验证文件类型
     const file = e.target.files[0];
-    if (!file) return;
+    if (!file) {
+        progress_box.style.display = 'none';
+        exportBtn.disabled = true;
+        return;
+    }
 
     // 检查文件扩展名
     const validExtensions = ['.json'];
@@ -74,6 +81,8 @@ function readFileAsync() {
 }
 
 async function handleFileData() {
+    let i = 0;
+    BMS_NUM = 0;
     try {
         // 读取文件
         const data = await readFileAsync();
@@ -84,9 +93,9 @@ async function handleFileData() {
         json_arr.pop();
 
         if (json_arr.length == 0) {
-            throw "❌ 文件内容错误，请检查文件内容";
+            throw "文件内容错误，请检查文件内容";
         }
-        for (let i = 0; i < json_arr.length; i++) {
+        for (; i < json_arr.length; i++) {
             //每条数据处理平分70%进度条，直到90%
             let progressNum = Math.floor((70 / json_arr.length) * (i + 1)) + 20;
             loadingAnimation(1, progressNum);
@@ -96,11 +105,15 @@ async function handleFileData() {
             //处理每条数据
             for (let key in json_arr[i]) {
                 //原数据中，每一个温度对应4个电芯温度
-                if(key.includes("BMS_T")) {
-                    for(let temp_idx = 1; temp_idx <= 4; temp_idx++) {
+                if (key.includes("BMS_T")) {
+                    //通过第一组数据确定BMS数量
+                    if (i == 0) {
+                        BMS_NUM += 4;
+                    }
+                    for (let temp_idx = 1; temp_idx <= 4; temp_idx++) {
                         excel_data[i + 1].push(json_arr[i][key]);
                     }
-                }else {
+                } else {
                     excel_data[i + 1].push(json_arr[i][key]);
                 }
             }
@@ -109,7 +122,7 @@ async function handleFileData() {
         // 下载文件
         downloadFile();
     } catch (error) {
-        tipsArea.textContent = `${error}`;
+        tipsArea.textContent = `❌ ${current_progress > 20 ? '第' + (i + 1) + '组数据异常' : ''} ${error}`;
         fileInput.disabled = false;
         loadingAnimation(0, null);
         fileInput.value = '';
@@ -118,12 +131,12 @@ async function handleFileData() {
 
 function downloadFile() {
     excel_data[0] = ["时间", "SOC", "Pack电压", "继电器外侧电压", "电流", "绝缘值", "主正接触器状态", "主负接触器状态", "预充接触器状态"];
-    //表头增加192个单体电压
-    for (let i = 1; i < 193; i++) {
+    //表头增加BMS_NUM个单体电压
+    for (let i = 1; i <= BMS_NUM; i++) {
         excel_data[0].push(`Volt${i}`);
     }
-    //表头增加48个温度
-    for (let i = 1; i < 193; i++) {
+    //表头增加BMS_NUM个温度
+    for (let i = 1; i <= BMS_NUM; i++) {
         excel_data[0].push(`Temp${i}`);
     }
 
@@ -160,7 +173,6 @@ async function exportExcel() {
     fileData = "";
     json_arr = [];
     excel_data = [];
-    loadingAnimation(1, 0);
 
     handleFileData();
 }
